@@ -4,6 +4,8 @@
   "description": "First react-app. ToDo list where i can save current/future tasks and set deadline dates.",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
