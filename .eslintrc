@@ -1,13 +1,22 @@
 {
-	"parser": "babel-eslint",
-	"extends": "react",
-	"env": {
-		"browser": true,
-		"node": true
-	},
-	"settings": {
-		"react": {
-			"version": "detect"
-		}
-	}
+  "parser": "babel-eslint",
+  "extends": ["react", "airbnb"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", "jsx"]
+      }
+    ],
+    "max-len": ["error", 80]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }
