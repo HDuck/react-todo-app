@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import MaskedInput from 'react-text-mask';
 
 const StyledInput = styled(MaskedInput)`
-  height: 25px;
+  height: ${props => (props.height ? props.height : '17')}px;
   width: ${props => (props.date ? '25%' : '90%')};
   margin: 0 15px 10px;
+  padding: ${props => (props.padding ? props.padding : '0')}px;
   background-color: none;
   border: none;
   border-bottom: 1px solid #232534;
@@ -19,28 +20,52 @@ const StyledInput = styled(MaskedInput)`
   }
 `;
 
+const StyledTextarea = styled.textarea`
+  height: ${props => (props.height ? props.height : '17')}px;
+  width: 90%;
+  margin: 0 15px 10px;
+  padding: ${props => (props.padding ? props.padding : '0')}px;
+  border: none;
+  border-bottom: 1px solid #232534;
+  overflow: auto;
+  outline: none;
+  resize: none;
+
+  :focus {
+    border-bottom-width: 4px;
+    border-bottom-color: #46763e;
+    margin-bottom: 7px;
+  }
+`;
+
 class FormInput extends React.Component {
   constructor(props) {
     super(props);
+    this.startHeigth = 17;
+    this.padding = 3;
 
-    const { customType } = this.props;
+    this.state = {
+      height: this.startHeight,
+    };
 
-    this.customType = customType;
     this.placeholder = this.getPlaceholder();
     this.mask = this.getMask();
+    this.handleResize = this.handleResize.bind(this);
   }
 
   getPlaceholder() {
+    const { customType } = this.props;
+
     const placeholders = {
       date: 'Deadline (DD-MM-YYYY)',
       varchar: 'Task description (ANY)',
     };
 
-    return placeholders[this.customType];
+    return placeholders[customType];
   }
 
   getMask() {
-    const { delimeter } = this.props;
+    const { customType, delimeter } = this.props;
 
     const masks = {
       date: [
@@ -58,14 +83,41 @@ class FormInput extends React.Component {
       varchar: false,
     };
 
-    return masks[this.customType];
+    return masks[customType];
+  }
+
+  handleResize(event) {
+    const textarea = event.target;
+    const computedHeight = textarea.scrollHeight - 2 * this.padding;
+
+    if (!textarea.value) {
+      this.setState({ height: this.startHeight });
+    } else {
+      this.setState({ height: computedHeight });
+    }
   }
 
   render() {
+    const { customType } = this.props;
+    const { height } = this.state;
+
+    if (customType === 'varchar') {
+      return (
+        <StyledTextarea
+          padding={this.padding}
+          height={height}
+          onChange={this.handleResize}
+          placeholder={this.placeholder}
+        />
+      );
+    }
+
     return (
       <StyledInput
+        padding={this.padding}
+        height={height}
+        date={customType === 'date' ? 1 : 0}
         mask={this.mask}
-        date={this.customType === 'date' ? 1 : 0}
         placeholder={this.placeholder}
       />
     );
