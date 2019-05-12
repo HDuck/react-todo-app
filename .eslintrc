@@ -2,6 +2,7 @@
   "parser": "babel-eslint",
   "extends": ["react", "airbnb"],
   "rules": {
+    "arrow-parens": [2, "as-needed", { "requireForBlockBody": false }],
     "react/jsx-filename-extension": [
       1,
       {
