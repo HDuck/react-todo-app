@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import Welcome from './components/welcome';
-import ControlPanel from './components/control-panel';
-import NewTaskPanel from './components/new-task-panel';
+import Title from './components/title';
+import ButtonsContainer from './components/buttons-container';
+import TaskPanel from './components/task-panel';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -14,10 +14,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const StyledApp = styled.div`
+const AppContainer = styled.div`
   display: grid;
   grid-template-columns: [start] 1fr [col2] 1fr [col3] 1fr [col4] 1fr [end];
-  grid-template-rows: [start] auto [row2] 75px [end];
   grid-auto-rows: auto;
   grid-column-gap: 3%;
   align-content: start;
@@ -25,22 +24,71 @@ const StyledApp = styled.div`
   margin: 0 auto;
 `;
 
-const StyledContainer = styled.div`
+const ControlPanel = styled.div`
   grid-column: col2 / col4;
-  grid-row-start: end;
+  grid-row: row2 / end;
+  background-color: #fcecc4;
+  border-radius: 25px 25px 25px 25px / 15px 15px 15px 15px;
 `;
 
-const App = () => (
-  <React.Fragment>
-    <GlobalStyle />
-    <StyledApp>
-      <Welcome />
-      <ControlPanel />
-      <StyledContainer>
-        <NewTaskPanel />
-      </StyledContainer>
-    </StyledApp>
-  </React.Fragment>
-);
+class App extends React.Component {
+  constructor() {
+    super();
+    this.controlButtons = [
+      {
+        id: 1,
+        name: 'New Task',
+        action: 'open:taskPanel',
+      },
+      {
+        id: 2,
+        name: 'Sort Tasks',
+        action: 'open:sortPanel',
+      },
+    ];
+    this.state = {
+      panelName: false,
+    };
+
+    this.handleControls = this.handleControls.bind(this);
+  }
+
+  handleControls(evt) {
+    evt.preventDefault();
+    const { panelName } = this.state;
+    const { action } = evt.target.dataset;
+
+    if (!action) return;
+
+    const panel = action.split(':')[1];
+    if (panel !== panelName) {
+      this.setState({ panelName: panel });
+    } else {
+      this.setState({ panelName: false });
+    }
+  }
+
+  render() {
+    const { panelName } = this.state;
+    const controls = {
+      taskPanel: <TaskPanel />,
+    };
+    return (
+      <React.Fragment>
+        <GlobalStyle />
+        <AppContainer>
+          <Title />
+          <ControlPanel>
+            <ButtonsContainer
+              buttons={this.controlButtons}
+              onClick={this.handleControls}
+            />
+            {controls[panelName]}
+          </ControlPanel>
+        </AppContainer>
+      </React.Fragment>
+    );
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
