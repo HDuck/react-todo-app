@@ -3,27 +3,29 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MaskedInput from 'react-text-mask';
 
-const StyledInput = styled(MaskedInput)`
-  height: ${props => (props.height ? props.height : '17')}px;
-  width: ${props => (props.date ? '25%' : '90%')};
-  margin: 0 15px 10px;
-  padding: ${props => (props.padding ? props.padding : '0')}px;
-  background-color: none;
-  border: none;
-  border-bottom: 1px solid ${props => props.theme.colors.primary};
-  outline: none;
+const baseStyles = props => ({
+  height: props.height ? `${props.height}px` : '17px',
+  width: props.date ? '25%' : '90%',
+  margin: '0 15px 10px',
+  padding: props.padding ? `${props.padding}px` : '0px',
+  backgroundColor: 'none',
+  border: 'none',
+  borderBottom: `1px solid ${props.theme.colors.primary}`,
+  outline: 'none',
+  ':focus': {
+    borderBottomWidth: '4px',
+    borderBottomColor: props.theme.colors.highlight,
+    marginBottom: '7px',
+  },
+});
 
-  :focus {
-    border-bottom-width: 4px;
-    border-bottom-color: ${props => props.theme.colors.highlight};
-    margin-bottom: 7px;
-  }
-`;
-
-const StyledTextarea = styled(StyledInput)`
-  overflow: none;
-  resize: none;
-`;
+const BaseInput = styled(MaskedInput)(props => baseStyles(props));
+const TextInput = styled.textarea(props =>
+  Object.assign({}, baseStyles(props), {
+    overflow: 'auto',
+    resize: 'none',
+  })
+);
 
 class FormInput extends React.Component {
   constructor(props) {
@@ -36,8 +38,8 @@ class FormInput extends React.Component {
     };
 
     this.inputComponents = {
-      date: StyledInput,
-      varchar: StyledTextarea,
+      date: BaseInput,
+      varchar: TextInput,
     };
 
     this.placeholder = this.getPlaceholder();
@@ -98,8 +100,9 @@ class FormInput extends React.Component {
         padding={this.padding}
         height={height}
         date={customType === 'date' ? 1 : 0}
-        mask={this.mask}
+        mask={this.mask ? this.mask : undefined}
         placeholder={this.placeholder}
+        onChange={customType === 'varchar' ? this.handleResize : null}
       />
     );
   }
