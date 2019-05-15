@@ -15,8 +15,8 @@ const StyledForm = styled.form`
 
 const TaskPanel = () => (
   <StyledForm action="#">
-    <FormInput />
-    <FormInput customType="date" delimeter="." />
+    <FormInput placeholder="What you gonna do?" />
+    <FormInput placeholder="Deadline.." customType="date" delimeter="." />
     <Button action="addTask" name="add task" />
   </StyledForm>
 );

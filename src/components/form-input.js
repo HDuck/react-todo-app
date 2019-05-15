@@ -8,6 +8,7 @@ const baseStyles = props => ({
   width: props.date ? '25%' : '90%',
   margin: '0 15px 10px',
   padding: props.padding ? `${props.padding}px` : '0px',
+  fontFamily: 'monospace',
   backgroundColor: 'none',
   border: 'none',
   borderBottom: `1px solid ${props.theme.colors.primary}`,
@@ -41,21 +42,8 @@ class FormInput extends React.Component {
       date: BaseInput,
       varchar: TextInput,
     };
-
-    this.placeholder = this.getPlaceholder();
     this.mask = this.getMask();
     this.handleResize = this.handleResize.bind(this);
-  }
-
-  getPlaceholder() {
-    const { customType } = this.props;
-
-    const placeholders = {
-      date: 'Deadline (DD-MM-YYYY)',
-      varchar: 'Task description (ANY)',
-    };
-
-    return placeholders[customType];
   }
 
   getMask() {
@@ -92,7 +80,7 @@ class FormInput extends React.Component {
   }
 
   render() {
-    const { customType } = this.props;
+    const { customType, placeholder } = this.props;
     const { height } = this.state;
     const CustomInput = this.inputComponents[customType];
     return (
@@ -101,7 +89,7 @@ class FormInput extends React.Component {
         height={height}
         date={customType === 'date' ? 1 : 0}
         mask={this.mask ? this.mask : undefined}
-        placeholder={this.placeholder}
+        placeholder={placeholder}
         onChange={customType === 'varchar' ? this.handleResize : null}
       />
     );
@@ -111,11 +99,13 @@ class FormInput extends React.Component {
 FormInput.propTypes = {
   customType: PropTypes.string,
   delimeter: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 FormInput.defaultProps = {
   customType: 'varchar',
   delimeter: '-',
+  placeholder: "Type something a'some",
 };
 
 export default FormInput;
