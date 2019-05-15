@@ -20,22 +20,9 @@ const StyledInput = styled(MaskedInput)`
   }
 `;
 
-const StyledTextarea = styled.textarea`
-  height: ${props => (props.height ? props.height : '17')}px;
-  width: 90%;
-  margin: 0 15px 10px;
-  padding: ${props => (props.padding ? props.padding : '0')}px;
-  border: none;
-  border-bottom: 1px solid ${props => props.theme.colors.primary};
-  overflow: auto;
-  outline: none;
+const StyledTextarea = styled(StyledInput)`
+  overflow: none;
   resize: none;
-
-  :focus {
-    border-bottom-width: 4px;
-    border-bottom-color: ${props => props.theme.colors.highlight};
-    margin-bottom: 7px;
-  }
 `;
 
 class FormInput extends React.Component {
@@ -46,6 +33,11 @@ class FormInput extends React.Component {
 
     this.state = {
       height: this.startHeight,
+    };
+
+    this.inputComponents = {
+      date: StyledInput,
+      varchar: StyledTextarea,
     };
 
     this.placeholder = this.getPlaceholder();
@@ -100,20 +92,9 @@ class FormInput extends React.Component {
   render() {
     const { customType } = this.props;
     const { height } = this.state;
-
-    if (customType === 'varchar') {
-      return (
-        <StyledTextarea
-          padding={this.padding}
-          height={height}
-          onChange={this.handleResize}
-          placeholder={this.placeholder}
-        />
-      );
-    }
-
+    const CustomInput = this.inputComponents[customType];
     return (
-      <StyledInput
+      <CustomInput
         padding={this.padding}
         height={height}
         date={customType === 'date' ? 1 : 0}
