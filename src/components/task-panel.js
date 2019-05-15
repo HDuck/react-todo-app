@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import FormInput from './form-input';
 import Button from './button';
 
@@ -14,20 +13,12 @@ const StyledForm = styled.form`
   height: 100%;
 `;
 
-const TaskPanel = ({ update }) => (
+const TaskPanel = () => (
   <StyledForm action="#">
-    <FormInput update={update} />
-    <FormInput update={update} customType="date" delimeter="." />
+    <FormInput />
+    <FormInput customType="date" delimeter="." />
     <Button action="addTask" name="add task" />
   </StyledForm>
 );
-
-TaskPanel.propTypes = {
-  update: PropTypes.number,
-};
-
-TaskPanel.defaultProps = {
-  update: 0,
-};
 
 export default TaskPanel;
