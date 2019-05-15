@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Title from './components/title';
 import ButtonsContainer from './components/buttons-container';
 import TaskPanel from './components/task-panel';
@@ -9,10 +9,18 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background-color: #232534;
+    background-color: ${props => props.theme.colors.primary};
     font-family: sans-serif;
   }
 `;
+
+const theme = {
+  colors: {
+    primary: '#232534',
+    secondary: '#fcecc4',
+    highlight: '#37895a',
+  },
+};
 
 const AppContainer = styled.div`
   display: grid;
@@ -27,7 +35,7 @@ const AppContainer = styled.div`
 const ControlPanel = styled.div`
   grid-column: col2 / col4;
   grid-row: row2 / end;
-  background-color: #fcecc4;
+  background-color: ${props => props.theme.colors.secondary};
   border-radius: 25px 25px 25px 25px / 15px 15px 15px 15px;
 `;
 
@@ -74,19 +82,21 @@ class App extends React.Component {
       taskPanel: <TaskPanel />,
     };
     return (
-      <React.Fragment>
-        <GlobalStyle />
-        <AppContainer>
-          <Title />
-          <ControlPanel>
-            <ButtonsContainer
-              buttons={this.controlButtons}
-              onClick={this.handleControls}
-            />
-            {controls[panelName]}
-          </ControlPanel>
-        </AppContainer>
-      </React.Fragment>
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <GlobalStyle />
+          <AppContainer>
+            <Title />
+            <ControlPanel>
+              <ButtonsContainer
+                buttons={this.controlButtons}
+                onClick={this.handleControls}
+              />
+              {controls[panelName]}
+            </ControlPanel>
+          </AppContainer>
+        </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

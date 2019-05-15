@@ -6,7 +6,7 @@ const Message = styled.h1`
   align-self: end;
   margin: 20px;
   padding: 7px 00;
-  color: #fcecc4;
+  color: ${props => props.theme.colors.secondary};
   cursor: default;
   text-align: center;
 `;
@@ -14,7 +14,7 @@ const Message = styled.h1`
 const Highlight = styled.span`
   position: relative;
   display: inline-block;
-  color: #37895a;
+  color: ${props => props.theme.colors.highlight};
   text-transform: uppercase;
 
   ::after {
@@ -25,7 +25,7 @@ const Highlight = styled.span`
     display: block;
     width: 100%;
     height: 4px;
-    background-color: #37895a;
+    background-color: ${props => props.theme.colors.highlight};
   }
 `;
 

@@ -10,29 +10,29 @@ const Styled = styled.a`
   height: 26px;
   margin: 6px;
   padding: 5px;
-  color: #37895a;
+  color: ${props => props.theme.colors.highlight};
   text-transform: uppercase;
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
-  background-color: #fcecc4;
-  border: 2px solid #37895a;
+  background-color: ${props => props.theme.colors.secondary};
+  border: 2px solid ${props => props.theme.colors.highlight};
   border-radius: 5px;
   cursor: pointer;
   transition: box-shadow 0.3s;
 
   :hover {
-    box-shadow: inset 0px 0px 5px 1px #37895a;
+    box-shadow: inset 0px 0px 5px 1px ${props => props.theme.colors.highlight};
     transition: box-shadow 0.3s;
   }
 `;
 
 const StyledActive = styled(Styled)`
-  color: #fcecc4;
-  background-color: #37895a;
+  color: ${props => props.theme.colors.secondary};
+  background-color: ${props => props.theme.colors.highlight};
 
   :hover {
-    box-shadow: 0px 0px 5px 2px #37895a;
+    box-shadow: 0px 0px 5px 2px ${props => props.theme.colors.highlight};
   }
 `;
 

@@ -10,12 +10,12 @@ const StyledInput = styled(MaskedInput)`
   padding: ${props => (props.padding ? props.padding : '0')}px;
   background-color: none;
   border: none;
-  border-bottom: 1px solid #232534;
+  border-bottom: 1px solid ${props => props.theme.colors.primary};
   outline: none;
 
   :focus {
     border-bottom-width: 4px;
-    border-bottom-color: #46763e;
+    border-bottom-color: ${props => props.theme.colors.highlight};
     margin-bottom: 7px;
   }
 `;
@@ -26,14 +26,14 @@ const StyledTextarea = styled.textarea`
   margin: 0 15px 10px;
   padding: ${props => (props.padding ? props.padding : '0')}px;
   border: none;
-  border-bottom: 1px solid #232534;
+  border-bottom: 1px solid ${props => props.theme.colors.primary};
   overflow: auto;
   outline: none;
   resize: none;
 
   :focus {
     border-bottom-width: 4px;
-    border-bottom-color: #46763e;
+    border-bottom-color: ${props => props.theme.colors.highlight};
     margin-bottom: 7px;
   }
 `;
