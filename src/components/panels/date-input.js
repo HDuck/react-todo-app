@@ -1,0 +1,41 @@
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import BaseInput from '../common/base-input';
+
+const StyledDateInput = styled(BaseInput)`
+  width: 130px;
+  text-align: center;
+  align-self: start;
+`;
+
+const DateInput = ({ placeholder, delimeter }) => (
+  <StyledDateInput
+    className="date-input"
+    placeholder={placeholder}
+    mask={[
+      /\d/,
+      /\d/,
+      delimeter,
+      /\d/,
+      /\d/,
+      delimeter,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ]}
+  />
+);
+
+DateInput.propTypes = {
+  placeholder: PropTypes.string,
+  delimeter: PropTypes.string,
+};
+
+DateInput.defaultProps = {
+  placeholder: '',
+  delimeter: '-',
+};
+
+export default DateInput;

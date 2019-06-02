@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Button from './button';
+import BaseButton from './common/base-button';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -37,18 +37,19 @@ class ButtonsContainer extends React.Component {
 
   render() {
     const { activeButton } = this.state;
-    const { buttons, onClick } = this.props;
+    const { buttons, clickHandler } = this.props;
     return (
-      <StyledContainer onClick={onClick}>
+      <StyledContainer onClick={clickHandler}>
         {buttons.map(button => (
-          <Button
+          <BaseButton
             key={button.id}
             id={button.id}
-            name={button.name}
             action={button.action}
             clicked={button.id === activeButton}
-            onClick={this.setActiveButton}
-          />
+            clickHandler={this.setActiveButton}
+          >
+            {button.name}
+          </BaseButton>
         ))}
       </StyledContainer>
     );
@@ -63,12 +64,12 @@ ButtonsContainer.propTypes = {
       action: PropTypes.string,
     })
   ),
-  onClick: PropTypes.func,
+  clickHandler: PropTypes.func,
 };
 
 ButtonsContainer.defaultProps = {
   buttons: [],
-  onClick() {},
+  clickHandler: () => {},
 };
 
 export default ButtonsContainer;
