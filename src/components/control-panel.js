@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ButtonsContainer from './buttons-container';
 import CreateTaskPanel from './panels/create-task-panel';
@@ -64,11 +65,12 @@ class ControlPanel extends React.Component {
 
   render() {
     const { activePanelName } = this.state;
+    const { addTaskHandler } = this.props;
 
     const panels = {
-      taskPanel: <CreateTaskPanel />,
-      sortPanel: <SortTasksPanel />,
-      anotherPanel: <AnotherPanel />,
+      CreateTaskPanel: <CreateTaskPanel addTask={addTaskHandler} />,
+      SortTasksPanel: <SortTasksPanel />,
+      AnotherPanel: <AnotherPanel />,
     };
 
     return (
@@ -84,4 +86,16 @@ class ControlPanel extends React.Component {
     );
   }
 }
+
+ControlPanel.propTypes = {
+  addTaskHandler: PropTypes.func,
+};
+
+ControlPanel.defaultProps = {
+  addTaskHandler: evt => {
+    evt.preventDefault();
+    evt.stopPropagation();
+  },
+};
+
 export default ControlPanel;

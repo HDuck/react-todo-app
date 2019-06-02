@@ -32,17 +32,43 @@ const TasksContainer = styled.div`
   grid-column: 2 / 4;
 `;
 
-const App = () => (
-  <ThemeProvider theme={theme}>
-    <React.Fragment>
-      <GlobalStyle />
-      <AppContainer>
-        <Title />
-        <ControlPanel />
-        <TasksContainer />
-      </AppContainer>
-    </React.Fragment>
-  </ThemeProvider>
-);
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      tasks: [],
+    };
+
+    this.addTask = this.addTask.bind(this);
+  }
+
+  addTask(taskData) {
+    const { tasks } = this.state;
+
+    tasks.push({
+      id: tasks.length + 1,
+      text: taskData.text,
+      date: taskData.deadline,
+    });
+
+    this.setState({ tasks });
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <GlobalStyle />
+          <AppContainer>
+            <Title />
+            <ControlPanel addTaskHandler={this.addTask} />
+            <TasksContainer />
+          </AppContainer>
+        </React.Fragment>
+      </ThemeProvider>
+    );
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
