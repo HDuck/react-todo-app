@@ -31,7 +31,7 @@ class ButtonsContainer extends React.Component {
     if (activeButton !== dataId) {
       this.setState({ activeButton: dataId });
     } else {
-      this.setState({ activeButton: false });
+      this.setState({ activeButton: null });
     }
   }
 
@@ -44,8 +44,8 @@ class ButtonsContainer extends React.Component {
           <BaseButton
             key={button.id}
             id={button.id}
-            action={button.action}
-            clicked={button.id === activeButton}
+            panelName={button.panelName}
+            active={button.id === activeButton}
             clickHandler={this.setActiveButton}
           >
             {button.name}
@@ -61,7 +61,7 @@ ButtonsContainer.propTypes = {
     PropTypes.shape({
       key: PropTypes.number,
       name: PropTypes.string,
-      action: PropTypes.string,
+      panelName: PropTypes.string,
     })
   ),
   clickHandler: PropTypes.func,

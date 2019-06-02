@@ -25,17 +25,17 @@ class ControlPanel extends React.Component {
       {
         id: 1,
         name: 'New Task',
-        action: 'open:taskPanel',
+        panelName: 'CreateTaskPanel',
       },
       {
         id: 2,
         name: 'Sort Tasks',
-        action: 'open:sortPanel',
+        panelName: 'SortTasksPanel',
       },
       {
         id: 3,
         name: 'Another Button',
-        action: 'open:anotherPanel',
+        panelName: 'AnotherPanel',
       },
     ];
 
@@ -51,15 +51,14 @@ class ControlPanel extends React.Component {
     evt.preventDefault();
 
     const { activePanelName } = this.state;
-    const { action } = evt.target.dataset;
+    const { panelName } = evt.target.dataset;
 
-    if (!action) return;
+    if (!panelName) return;
 
-    const panel = action.split(':')[1];
-    if (panel !== activePanelName) {
-      this.setState({ activePanelName: panel });
+    if (panelName !== activePanelName) {
+      this.setState({ activePanelName: panelName });
     } else {
-      this.setState({ activePanelName: false });
+      this.setState({ activePanelName: null });
     }
   }
 
@@ -78,7 +77,9 @@ class ControlPanel extends React.Component {
           buttons={this.controlButtons}
           clickHandler={this.handleControls}
         />
-        <PanelsContainer>{panels[activePanelName]}</PanelsContainer>
+        <PanelsContainer>
+          {activePanelName && panels[activePanelName]}
+        </PanelsContainer>
       </ControlsContainer>
     );
   }

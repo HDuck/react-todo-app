@@ -45,18 +45,18 @@ const StyledActive = styled(Styled)`
 const BaseButton = ({
   id,
   children,
-  action,
-  clicked,
+  panelName,
+  active,
   primary,
   clickHandler,
 }) => {
-  const ButtonTag = clicked ? StyledActive : Styled;
+  const ButtonTag = active ? StyledActive : Styled;
 
   return (
     <ButtonTag
       href="#"
       data-id={id}
-      data-action={action}
+      data-panel-name={panelName}
       onClick={clickHandler}
       primary={primary ? 1 : 0}
     >
@@ -68,8 +68,8 @@ const BaseButton = ({
 BaseButton.propTypes = {
   id: PropTypes.number,
   children: PropTypes.node,
-  action: PropTypes.string,
-  clicked: PropTypes.bool,
+  panelName: PropTypes.string,
+  active: PropTypes.bool,
   primary: PropTypes.bool,
   clickHandler: PropTypes.func,
 };
@@ -77,8 +77,8 @@ BaseButton.propTypes = {
 BaseButton.defaultProps = {
   id: 0,
   children: 'button',
-  action: '',
-  clicked: false,
+  panelName: null,
+  active: false,
   primary: false,
   clickHandler: () => {},
 };
