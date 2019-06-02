@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Message = styled.h1`
-  grid-column: col2 / col4;
+  grid-column: 2 / 4;
   align-self: end;
   margin: 20px;
   padding: 7px 00;
