@@ -39,12 +39,6 @@ class ControlPanel extends React.Component {
       },
     ];
 
-    this.panels = {
-      taskPanel: <CreateTaskPanel />,
-      sortPanel: <SortTasksPanel />,
-      anotherPanel: <AnotherPanel />,
-    };
-
     this.state = {
       activePanelName: false,
     };
@@ -72,13 +66,19 @@ class ControlPanel extends React.Component {
   render() {
     const { activePanelName } = this.state;
 
+    const panels = {
+      taskPanel: <CreateTaskPanel />,
+      sortPanel: <SortTasksPanel />,
+      anotherPanel: <AnotherPanel />,
+    };
+
     return (
       <ControlsContainer>
         <ButtonsContainer
           buttons={this.controlButtons}
           clickHandler={this.handleControls}
         />
-        <PanelsContainer>{this.panels[activePanelName]}</PanelsContainer>
+        <PanelsContainer>{panels[activePanelName]}</PanelsContainer>
       </ControlsContainer>
     );
   }
