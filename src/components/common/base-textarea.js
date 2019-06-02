@@ -17,42 +17,61 @@ const StyledTextarea = styled.textarea`
   resize: none;
 `;
 
-class BaseTextarea extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.textarea = React.createRef();
-
-    this.resizeTextarea = this.resizeTextarea.bind(this);
-  }
-
-  resizeTextarea() {
-    const textarea = this.textarea.current;
+const BaseTextarea = React.forwardRef((props, ref) => {
+  const resizeTextarea = evt => {
+    const textarea = evt.target;
     textarea.style.height = 'auto';
 
     const height = textarea.scrollHeight;
 
     textarea.style.height = `${height}px`;
-  }
+  };
 
-  render() {
-    const { placeholder, className } = this.props;
+  return (
+    <FormElementWrapper
+      className={props.className}
+      styledElement={StyledTextarea}
+    >
+      <StyledTextarea
+        placeholder={props.placeholder}
+        onChange={resizeTextarea}
+        ref={ref}
+      />
+    </FormElementWrapper>
+  );
+});
+// class BaseTextarea extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    return (
-      <FormElementWrapper className={className} styledElement={StyledTextarea}>
-        <StyledTextarea
-          placeholder={placeholder}
-          onChange={this.resizeTextarea}
-          ref={this.textarea}
-        />
-      </FormElementWrapper>
-    );
-  }
-}
+//     this.resizeTextarea = this.resizeTextarea.bind(this);
+//   }
+
+//   resizeTextarea(evt) {
+//     const textarea = evt.target;
+//     textarea.style.height = 'auto';
+
+//     const height = textarea.scrollHeight;
+
+//     textarea.style.height = `${height}px`;
+//   }
+
+//   render() {
+//     const { placeholder, className, innerRef } = this.props;
+
+//     return (
+
+//     );
+//   }
+// }
 
 BaseTextarea.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  // innerRef: PropTypes.oneOfType([
+  //   PropTypes.func,
+  //   PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  // ]).isRequired,
 };
 
 BaseTextarea.defaultProps = {

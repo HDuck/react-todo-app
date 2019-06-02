@@ -9,9 +9,13 @@ const StyledTextarea = styled(BaseTextarea)`
   align-self: start;
 `;
 
-const TextInput = ({ placeholder }) => (
-  <StyledTextarea className="text-input" placeholder={placeholder} />
-);
+const TextInput = React.forwardRef((props, ref) => (
+  <StyledTextarea
+    ref={ref}
+    className="text-input"
+    placeholder={props.placeholder}
+  />
+));
 
 TextInput.propTypes = {
   placeholder: PropTypes.string,

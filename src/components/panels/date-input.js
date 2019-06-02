@@ -9,24 +9,25 @@ const StyledDateInput = styled(BaseInput)`
   align-self: start;
 `;
 
-const DateInput = ({ placeholder, delimeter }) => (
+const DateInput = React.forwardRef((props, ref) => (
   <StyledDateInput
+    ref={ref}
     className="date-input"
-    placeholder={placeholder}
+    placeholder={props.placeholder}
     mask={[
       /\d/,
       /\d/,
-      delimeter,
+      props.delimeter,
       /\d/,
       /\d/,
-      delimeter,
+      props.delimeter,
       /\d/,
       /\d/,
       /\d/,
       /\d/,
     ]}
   />
-);
+));
 
 DateInput.propTypes = {
   placeholder: PropTypes.string,

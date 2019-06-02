@@ -15,13 +15,11 @@ const StyledInput = styled(MaskedInput)`
   outline: none;
 `;
 
-const BaseInput = ({ placeholder, mask, className }) => {
-  return (
-    <FormElementWrapper className={className} styledElement={StyledInput}>
-      <StyledInput placeholder={placeholder} mask={mask} />
-    </FormElementWrapper>
-  );
-};
+const BaseInput = React.forwardRef((props, ref) => (
+  <FormElementWrapper className={props.className} styledElement={StyledInput}>
+    <StyledInput ref={ref} placeholder={props.placeholder} mask={props.mask} />
+  </FormElementWrapper>
+));
 
 BaseInput.propTypes = {
   className: PropTypes.string,

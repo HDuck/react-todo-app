@@ -11,12 +11,24 @@ const Form = styled.form`
   align-items: end;
 `;
 
-const CreateTaskPanel = () => (
-  <Form action="#">
-    <TextInput placeholder="New task?" />
-    <DateInput placeholder="Deadline.." delimeter="." />
-    <BaseButton action="addTask">add task</BaseButton>
-  </Form>
-);
+class CreateTaskPanel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.textInp = React.createRef();
+    this.dateInp = React.createRef();
+  }
+
+
+  render() {
+    return (
+      <Form action="#" ref={this.formRef}>
+        <TextInput ref={this.textInp} placeholder="New task?" />
+        <DateInput ref={this.dateInp} placeholder="Deadline.." delimeter="." />
+        <BaseButton action="addTask">add task</BaseButton>
+      </Form>
+    );
+  }
+}
 
 export default CreateTaskPanel;
