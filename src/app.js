@@ -2,15 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Title from './components/title';
-import ButtonsContainer from './components/buttons-container';
-import TaskPanel from './components/task-panel';
+import ControlPanel from './components/control-panel';
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
     background-color: ${props => props.theme.colors.primary};
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
   }
 `;
 
@@ -24,81 +23,26 @@ const theme = {
 
 const AppContainer = styled.div`
   display: grid;
-  grid-template-columns: [start] 1fr [col2] 1fr [col3] 1fr [col4] 1fr [end];
-  grid-auto-rows: auto;
-  grid-column-gap: 3%;
-  align-content: start;
-  width: 66%;
-  margin: 0 auto;
+  grid: auto / 150px 300px 300px 150px;
+  grid-column-gap: 10px;
+  justify-content: center;
 `;
 
-const ControlPanel = styled.div`
-  grid-column: col2 / col4;
-  grid-row: row2 / end;
-  background-color: ${props => props.theme.colors.secondary};
-  border-radius: 25px 25px 25px 25px / 15px 15px 15px 15px;
+const TasksContainer = styled.div`
+  grid-column: 2 / 4;
 `;
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.controlButtons = [
-      {
-        id: 1,
-        name: 'New Task',
-        action: 'open:taskPanel',
-      },
-      {
-        id: 2,
-        name: 'Sort Tasks',
-        action: 'open:sortPanel',
-      },
-    ];
-    this.state = {
-      panelName: false,
-    };
-
-    this.handleControls = this.handleControls.bind(this);
-  }
-
-  handleControls(evt) {
-    evt.preventDefault();
-    const { panelName } = this.state;
-    const { action } = evt.target.dataset;
-
-    if (!action) return;
-
-    const panel = action.split(':')[1];
-    if (panel !== panelName) {
-      this.setState({ panelName: panel });
-    } else {
-      this.setState({ panelName: false });
-    }
-  }
-
-  render() {
-    const { panelName } = this.state;
-    const controls = {
-      taskPanel: <TaskPanel />,
-    };
-    return (
-      <ThemeProvider theme={theme}>
-        <React.Fragment>
-          <GlobalStyle />
-          <AppContainer>
-            <Title />
-            <ControlPanel>
-              <ButtonsContainer
-                buttons={this.controlButtons}
-                onClick={this.handleControls}
-              />
-              {controls[panelName]}
-            </ControlPanel>
-          </AppContainer>
-        </React.Fragment>
-      </ThemeProvider>
-    );
-  }
-}
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <React.Fragment>
+      <GlobalStyle />
+      <AppContainer>
+        <Title />
+        <ControlPanel />
+        <TasksContainer />
+      </AppContainer>
+    </React.Fragment>
+  </ThemeProvider>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));
