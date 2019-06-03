@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Title from './components/title';
+import TextHighlighter from './components/common/base-text-highlighter';
 import ControlPanel from './components/control-panel';
 
 const GlobalStyle = createGlobalStyle`
@@ -30,6 +31,14 @@ const AppContainer = styled.div`
 
 const TasksContainer = styled.div`
   grid-column: 2 / 4;
+`;
+
+const TasksTitle = styled.h2`
+  position: relative;
+  margin: 25px 0 15px;
+  color: ${props => props.theme.colors.secondary};
+  font-size: 32px;
+  text-align: center;
 `;
 
 class App extends React.Component {
@@ -63,7 +72,11 @@ class App extends React.Component {
           <AppContainer>
             <Title />
             <ControlPanel addTaskHandler={this.addTask} />
-            <TasksContainer />
+            <TasksContainer>
+              <TasksTitle>
+                <TextHighlighter top>TODO</TextHighlighter>:
+              </TasksTitle>
+            </TasksContainer>
           </AppContainer>
         </React.Fragment>
       </ThemeProvider>
