@@ -43,7 +43,7 @@ const TextHighlighter = ({ bottom, top, children }) => (
 );
 
 TextHighlighter.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.string.isRequired,
   bottom: PropTypes.bool,
   top: PropTypes.bool,
 };
