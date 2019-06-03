@@ -4,6 +4,7 @@ import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Title from './components/title';
 import TextHighlighter from './components/common/base-text-highlighter';
 import ControlPanel from './components/control-panel';
+import Task from './components/task';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -35,7 +36,7 @@ const TasksContainer = styled.div`
 
 const TasksTitle = styled.h2`
   position: relative;
-  margin: 25px 0 15px;
+  margin: 25px 0;
   color: ${props => props.theme.colors.secondary};
   font-size: 32px;
   text-align: center;
@@ -45,6 +46,7 @@ class App extends React.Component {
   constructor() {
     super();
 
+    this.taskCounter = 0;
     this.state = {
       tasks: [],
     };
@@ -54,9 +56,10 @@ class App extends React.Component {
 
   addTask(taskData) {
     const { tasks } = this.state;
+    this.taskCounter = this.taskCounter + 1;
 
-    tasks.push({
-      id: tasks.length + 1,
+    tasks.unshift({
+      id: this.taskCounter,
       text: taskData.text,
       date: taskData.deadline,
     });
@@ -65,6 +68,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { tasks } = this.state;
+
     return (
       <ThemeProvider theme={theme}>
         <React.Fragment>
@@ -76,6 +81,14 @@ class App extends React.Component {
               <TasksTitle>
                 <TextHighlighter top>TODO</TextHighlighter>:
               </TasksTitle>
+              {tasks.map(task => (
+                <Task
+                  key={task.id}
+                  taskNumber={task.id}
+                  text={task.text}
+                  date={task.date}
+                />
+              ))}
             </TasksContainer>
           </AppContainer>
         </React.Fragment>
