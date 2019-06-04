@@ -76,7 +76,7 @@ const TaskCard = styled.div`
   }}
 `;
 
-const Task = ({ taskNumber, text, date }) => (
+const Task = ({ taskNumber, text, date, deleteTaskHandler }) => (
   <TaskCard isDate={date ? 1 : 0} taskNumber={taskNumber}>
     <TaskDescription>{text}</TaskDescription>
     {date ? <TaskDeadline>{date}</TaskDeadline> : null}
@@ -85,7 +85,10 @@ const Task = ({ taskNumber, text, date }) => (
         <BaseButton primary>
           <MdCheck />
         </BaseButton>
-        <BaseButton primary>
+        <BaseButton
+          primary
+          clickHandler={e => deleteTaskHandler(e, taskNumber)}
+        >
           <MdClose />
         </BaseButton>
       </IconContext.Provider>
@@ -97,12 +100,14 @@ Task.propTypes = {
   taskNumber: PropTypes.number,
   text: PropTypes.string,
   date: PropTypes.string,
+  deleteTaskHandler: PropTypes.func,
 };
 
 Task.defaultProps = {
   taskNumber: 1,
   text: false,
   date: false,
+  deleteTaskHandler: false,
 };
 
 export default Task;
