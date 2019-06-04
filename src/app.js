@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import LocalStorage from './local-storage';
 import Title from './components/title';
 import TextHighlighter from './components/common/base-text-highlighter';
 import ControlPanel from './components/control-panel';
@@ -46,9 +47,16 @@ class App extends React.Component {
   constructor() {
     super();
 
-    this.taskCounter = 0;
+    this.storage = new LocalStorage();
+
+    if (!this.storage.get('tasksCount')) {
+      this.storage.set({ tasksCount: 0 });
+    }
+
+    const tasks = this.storage.get('tasks', { serialized: true });
+
     this.state = {
-      tasks: [],
+      tasks: tasks || [],
     };
 
     this.addTask = this.addTask.bind(this);
@@ -57,14 +65,16 @@ class App extends React.Component {
 
   addTask(taskData) {
     const { tasks } = this.state;
-    this.taskCounter = this.taskCounter + 1;
+    const tasksCount = parseInt(this.storage.get('tasksCount'), 10) + 1;
 
     tasks.unshift({
-      id: this.taskCounter,
+      id: tasksCount,
       text: taskData.text,
       date: taskData.deadline,
     });
 
+    this.storage.set({ tasksCount });
+    this.storage.set(tasks, 'tasks');
     this.setState({ tasks });
   }
 
