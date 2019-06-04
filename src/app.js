@@ -78,9 +78,11 @@ class App extends React.Component {
             <Title />
             <ControlPanel addTaskHandler={this.addTask} />
             <TasksContainer>
-              <TasksTitle>
-                <TextHighlighter top>TODO</TextHighlighter>:
-              </TasksTitle>
+              {tasks.length ? (
+                <TasksTitle>
+                  <TextHighlighter top>TODO</TextHighlighter>:
+                </TasksTitle>
+              ) : null}
               {tasks.map(task => (
                 <Task
                   key={task.id}
