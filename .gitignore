@@ -1,0 +1,8 @@
+# Node modules
+node_modules/
+
+# Build files
+dist/
+
+# VS Code workspace options
+.vscode/
