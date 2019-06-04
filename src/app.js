@@ -52,6 +52,7 @@ class App extends React.Component {
     };
 
     this.addTask = this.addTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   addTask(taskData) {
@@ -65,6 +66,20 @@ class App extends React.Component {
     });
 
     this.setState({ tasks });
+  }
+
+  deleteTask(evt, id) {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    const { tasks } = this.state;
+
+    const deleteIdx = tasks.findIndex(task => task.id === id);
+    if (deleteIdx !== -1) {
+      tasks.splice(deleteIdx, 1);
+
+      this.setState({ tasks });
+    }
   }
 
   render() {
@@ -87,6 +102,7 @@ class App extends React.Component {
                   taskNumber={task.id}
                   text={task.text}
                   date={task.date}
+                  deleteTaskHandler={this.deleteTask}
                 />
               ))}
             </TasksContainer>
